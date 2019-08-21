@@ -1,0 +1,49 @@
+plugins {
+    id 'java'
+}
+
+group 'hello'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile 'junit:junit:4.12'
+    testCompile "org.apache.commons:commons-lang3:3.3.2"
+    testCompile 'io.rest-assured:rest-assured:3.3.0'
+    testCompile group: 'io.rest-assured', name: 'json-schema-validator', version: '3.3.0'
+}
+
+task setUpApiTestEnv {
+
+    //set environment among [local, stage, prod]
+    def availableEnvironments = ['local', 'stage', 'prod']
+    def env = project.hasProperty( 'env' ) ? env : 'local'
+
+    if (!availableEnvironments.contains(env)) {
+        def message = "Target environment '${env}' not allowed. Please use one of the following: " +
+                availableEnvironments.join(", ")
+        throw new GradleException(message)
+    }
+
+    //use environment specific sources
+    Properties prop=new Properties()
+    InputStream inputFile
+    inputFile=new FileInputStream("src/test/resources/env/${env}.properties")
+    prop.load(inputFile)
+    prop.list(System.out)
+}
+
+task apiIntegrationTest(type: Test) {
+    dependsOn 'setUpApiTestEnv'
+    reports {
+        html.enabled = true
+    }
+    testLogging {
+        showStandardStreams = true
+    }
+}
