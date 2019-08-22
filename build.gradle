@@ -11,39 +11,39 @@ repositories {
     mavenCentral()
 }
 
+ext {
+    env = project.findProperty('env') ? env : 'local'
+}
+
 dependencies {
     testCompile 'junit:junit:4.12'
     testCompile "org.apache.commons:commons-lang3:3.3.2"
-    testCompile 'io.rest-assured:rest-assured:3.3.0'
+    compile 'io.rest-assured:rest-assured:3.3.0'
     testCompile group: 'io.rest-assured', name: 'json-schema-validator', version: '3.3.0'
 }
 
-task setUpApiTestEnv {
+task runApiTest(type: Test) {
+    group "qa"
+    description 'Run API test on ${env} and generate report'
+    systemProperty 'env', project.getProperty('env')
 
-    //set environment among [local, stage, prod]
-    def availableEnvironments = ['local', 'stage', 'prod']
-    def env = project.hasProperty( 'env' ) ? env : 'local'
-
-    if (!availableEnvironments.contains(env)) {
-        def message = "Target environment '${env}' not allowed. Please use one of the following: " +
-                availableEnvironments.join(", ")
-        throw new GradleException(message)
+    // check env among ['mock', 'local', 'stage', 'prod']
+    doFirst {
+        def availableEnvironments = ['mock', 'local', 'stage', 'prod']
+        if (!availableEnvironments.contains(env)) {
+            def message = "Target environment '${env}' not allowed. Please use one of the following: " +
+                    availableEnvironments.join(", ")
+            throw new GradleException(message)
+        }
     }
-
-    //use environment specific sources
-    Properties prop=new Properties()
-    InputStream inputFile
-    inputFile=new FileInputStream("src/test/resources/env/${env}.properties")
-    prop.load(inputFile)
-    prop.list(System.out)
-}
-
-task apiIntegrationTest(type: Test) {
-    dependsOn 'setUpApiTestEnv'
-    reports {
-        html.enabled = true
-    }
-    testLogging {
-        showStandardStreams = true
+    //generate html api test report
+    doLast {
+        reports {
+            html.enabled = true
+        }
+        testLogging {
+            showStandardStreams = true
+        }
     }
 }
+

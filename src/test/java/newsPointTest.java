@@ -11,7 +11,7 @@ import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInC
 public class newsPointTest {
     private static final String NEWSPOINT_BASE_URL= "http://partnersnp.indiatimes.com/feed/fx/atp";
 
-    @Test
+   // @Test
     public void checkNewsPointJsonSchema() {
         RestAssured.baseURI = NEWSPOINT_BASE_URL;
 
@@ -33,6 +33,6 @@ public class newsPointTest {
         ResponseSpecification responseSpec = responseSpecBuilder.build();
 
         // send newspoint request
-        given().log().all().spec(requestSpec).when().get("/").then().spec(responseSpec);
+        given().log().all().spec(requestSpec).when().get("/").then().log().all().spec(responseSpec);
     }
 }
