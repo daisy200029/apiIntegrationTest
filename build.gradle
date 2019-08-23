@@ -17,9 +17,11 @@ ext {
 
 dependencies {
     testCompile 'junit:junit:4.12'
-    testCompile "org.apache.commons:commons-lang3:3.3.2"
-    compile 'io.rest-assured:rest-assured:3.3.0'
-    testCompile group: 'io.rest-assured', name: 'json-schema-validator', version: '3.3.0'
+    testCompile 'io.rest-assured:rest-assured:3.3.0'
+    testCompile 'io.rest-assured:json-schema-validator:3.3.0'
+    testCompile 'org.apache.logging.log4j:log4j-api:2.7'
+    testCompile 'org.apache.logging.log4j:log4j-core:2.7'
+    testCompile 'org.apache.logging.log4j:log4j-slf4j-impl:2.7'
 }
 
 task runApiTest(type: Test) {
@@ -36,6 +38,7 @@ task runApiTest(type: Test) {
             throw new GradleException(message)
         }
     }
+
     //generate html api test report
     doLast {
         reports {
