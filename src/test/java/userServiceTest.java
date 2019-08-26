@@ -1,16 +1,16 @@
 
 import io.restassured.RestAssured;
+import static io.restassured.RestAssured.given;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
+import static org.junit.jupiter.api.Assertions.fail;
 import services.envConfigService;
 import services.userService;
-
-import static io.restassured.RestAssured.given;
-import static org.junit.Assert.fail;
 
 @Tag("ffLite")
 public class userServiceTest {
@@ -23,8 +23,8 @@ public class userServiceTest {
      * 2. check server connection
      * 3. set baseUrl
      */
-    @Before
-    public void before() {
+    @BeforeAll
+    public static void beforeAll () {
         envConfigService envConfigService = new envConfigService();
         envConfigService.loadEnvProperties();
         if (envConfigService.checkConnection() != 200) {
@@ -37,6 +37,7 @@ public class userServiceTest {
      * 1. send user login request
      * 2. verify response 200
      */
+
     @Test
     public void check_login_success() {
         // load user profile from env
