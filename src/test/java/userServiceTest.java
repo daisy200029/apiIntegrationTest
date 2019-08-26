@@ -4,14 +4,15 @@ import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.jupiter.api.Tag;
 import services.envConfigService;
 import services.userService;
 
 import static io.restassured.RestAssured.given;
 import static org.junit.Assert.fail;
 
+@Tag("ffLite")
 public class userServiceTest {
 
     private userService userService;

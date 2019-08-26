@@ -16,7 +16,16 @@ ext {
 }
 
 dependencies {
+    //Junit 4
     testCompile 'junit:junit:4.12'
+    testRuntime 'org.junit.vintage:junit-vintage-engine:4.12.0-M4'
+    //Junit 5
+    testCompile 'org.junit.jupiter:junit-jupiter-api:5.0.0-M4'
+    testRuntime 'org.junit.jupiter:junit-jupiter-engine:5.0.0-M4'
+    testCompile 'org.junit.platform:junit-platform-runner:1.0.0-M1'
+//    testCompile 'org.junit.platform:junit-platform-gradle-plugin:1.0.0-M4'
+
+    //Restassured
     testCompile 'io.rest-assured:rest-assured:3.3.0'
     testCompile 'io.rest-assured:json-schema-validator:3.3.0'
     testCompile 'org.apache.logging.log4j:log4j-api:2.7'
@@ -41,6 +50,9 @@ task runApiTest(type: Test) {
 
     //generate html api test report
     doLast {
+        useJUnitPlatform {
+            includeTags 'ffLite'
+        }
         reports {
             html.enabled = true
         }
