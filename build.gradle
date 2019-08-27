@@ -23,7 +23,7 @@ dependencies {
     //Junit 5
     testCompile 'org.junit.jupiter:junit-jupiter-api:5.5.1'
     testRuntime 'org.junit.jupiter:junit-jupiter-engine:5.5.1'
-//    testCompile 'org.junit.platform:junit-platform-runner:1.0.0-M4'
+    //testCompile 'org.junit.platform:junit-platform-runner:1.0.0-M4'
 
     //Restassured
     testCompile 'io.rest-assured:rest-assured:3.3.0'
@@ -51,7 +51,7 @@ task runApiTest(type: Test) {
 
     //generate html api test report
     useJUnitPlatform{
-            includeTags 'partner'
+            includeTags 'ffLite'
     }
     reports {
             html.enabled = true

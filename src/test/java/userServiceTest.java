@@ -37,7 +37,6 @@ public class userServiceTest {
      * 1. send user login request
      * 2. verify response 200
      */
-
     @Test
     public void check_login_success() {
         // load user profile from env
