@@ -1,14 +1,17 @@
 
 import io.restassured.RestAssured;
+
 import static io.restassured.RestAssured.given;
+
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
+
 import static org.junit.jupiter.api.Assertions.fail;
+
 import services.envConfigService;
 import services.userService;
 
@@ -24,7 +27,7 @@ public class userServiceTest {
      * 3. set baseUrl
      */
     @BeforeAll
-    public static void beforeAll () {
+    public static void beforeAll() {
         envConfigService envConfigService = new envConfigService();
         envConfigService.loadEnvProperties();
         if (envConfigService.checkConnection() != 200) {
